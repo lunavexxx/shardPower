@@ -1,0 +1,281 @@
+<!-- 首页 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <title>首页</title>
+    <link href="../layui/css/layui.css" rel="stylesheet">
+    <!-- 样式 -->
+    <link href="../css/style.css" rel="stylesheet"/>
+    <!-- 主题（主要颜色设置） -->
+    <link href="../css/theme.css" rel="stylesheet"/>
+    <!-- 通用的css -->
+    <link href="../css/common.css" rel="stylesheet"/>
+</head>
+<style>
+    html::after {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        content: '';
+        display: block;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
+
+    #swiper {
+        overflow: hidden;
+    }
+
+    #swiper .layui-carousel-ind li {
+        width: 16px;
+        height: 10px;
+        border-width: 0;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, .3);
+        border-radius: 3px;
+        background-color: #f7f7f7;
+        box-shadow: 0 0 6px rgba(255, 0, 0, .8);
+    }
+
+    #swiper .layui-carousel-ind li.layui-this {
+        width: 24px;
+        height: 10px;
+        border-width: 0;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, .3);
+        border-radius: 0;
+        background-color: red;
+        box-shadow: 0 0 6px rgba(255, 0, 0, .8);
+    }
+
+    input#buynumber::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    input#buynumber[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    .message-container {
+        width: 100%
+    }
+
+    .detail-tab .layui-tab-card > .layui-tab-title .layui-this {
+        background-color: rgba(255, 255, 255, 1);
+        color: rgba(0, 0, 0, 1);
+        font-size: 14px;
+    }
+
+    .data-detail {
+        padding-bottom: 20px;
+    }
+
+    .data-detail .layui-breadcrumb a.first {
+        color: rgba(255, 255, 255, 1) !important;
+    }
+
+    .pay-type-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 10px; /* Optional: Adjust the gap between items */
+    }
+
+    .pay-type-item {
+        width: 18vw;
+        height: 14vh;
+        border: 1px solid #000; /* Border for visual reference */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .pay-type-item img {
+        max-width: 80%; /* Adjust image size */
+        max-height: 50%; /* Adjust image size */
+    }
+
+    .pay-type-item label {
+        margin-top: 5px; /* Space between image and label */
+        text-align: center;
+    }
+</style>
+<body>
+
+<div id="app">
+
+    <div class="data-detail">
+        <div :style='{"padding":"0 10px","boxShadow":"0 0 0px rgba(255,0,0,0)","margin":"20px auto","borderColor":"rgba(255,0,0,.3)","backgroundColor":"rgba(28, 185, 200, 1)","borderRadius":"4px","borderWidth":"0","borderStyle":"solid","height":"54px"}'
+             class="data-detail-breadcrumb">
+					<span class="layui-breadcrumb">
+						<a :style='{"padding":"8px 10px","boxShadow":"0 0 0px rgba(255,0,0,0)","margin":"0 5px","borderColor":"rgba(255,0,0,.3)","backgroundColor":"rgba(255, 255, 255, 0)","color":"rgba(255, 255, 255, 1)","borderRadius":"0","borderWidth":"0","fontSize":"16px","borderStyle":"solid"}'
+                           class="first"
+                           href="../home/home.html">首页</a>
+						<a><cite
+                                :style='{"padding":"8px 15px","boxShadow":"","margin":"0 15px","borderColor":"rgba(255,0,0,.3)","backgroundColor":"#fff","color":"#333","borderRadius":"4px","borderWidth":"0","fontSize":"16px","borderStyle":"solid"}'>{{
+                                title
+                            }}</cite></a>
+					</span>
+        </div>
+
+        <div class="layui-row" style="display: flex">
+            <div :style='{"padding":"0","boxShadow":"","margin":"0 0 0 20px","borderColor":"rgba(255,0,0,.3)","backgroundColor":"rgba(248, 248, 248, 0)","borderRadius":"0","borderWidth":"0","borderStyle":"solid"}'
+                 class="layui-col-md7"
+                 style="padding-left: 20px;flex: 1;">
+                <h1 :style='{"padding":"0px 15px 20px 15px","boxShadow":"0 0 0px rgba(255,0,0,0)","borderColor":"rgba(0, 0, 0, 0)","backgroundColor":"rgba(255, 255, 255, 0)","color":"#333","borderRadius":"0","textAlign":"center","borderWidth":"0","fontSize":"30px","borderStyle":"solid"}'
+                    class="title"
+                    style="position: relative;">支付方式</h1>
+                <div class="pay-type-content">
+                    <div class="pay-type-item">
+                        <input v-model="type" name="mode" type="radio" value="微信支付"></input>
+                        <label for="contactChoice1">微信支付</label>
+                        <img alt src="../img/test/weixin.png">
+                        <!-- <span>微信支付</span> -->
+                    </div>
+                    <div class="pay-type-item">
+                        <!--                        <button v-model="type" label="支付宝支付"></button>-->
+                        <input v-model="type" name="mode" type="radio" value="支付宝支付"></input>
+                        <label for="contactChoice1">支付宝支付</label>
+                        <img alt src="../img/test/zhifubao.png">
+                        <!-- <span>支付宝支付</span> -->
+                    </div>
+                    <div class="pay-type-item">
+                        <!--                        <button v-model="type"  title="">建设银行</button>-->
+                        <input v-model="type" name="mode" type="radio" value="建设银行"></input>
+                        <label for="contactChoice1">建设银行</label>
+                        <img alt src="../img/test/jianshe.png">
+
+                    </div>
+                    <div class="pay-type-item" >
+                        <!--                        <button v-model="type" label="农业银行"></button>-->
+                        <input v-model="type" name="mode" type="radio" value="农业银行"></input>
+                        <label for="contactChoice1">农业银行</label>
+                        <img alt src="../img/test/nongye.png">
+                        <!-- <span>农业银行</span> -->
+                    </div>
+                    <div class="pay-type-item">
+                        <!--                        <button v-model="type" label="中国银行"></button>-->
+                        <input v-model="type" name="mode" type="radio" value="中国银行"></input>
+                        <label for="contactChoice1">中国银行</label>
+                        <img alt src="../img/test/zhongguo.png">
+                        <!-- <span>中国银行</span> -->
+                    </div>
+                    <div class="pay-type-item">
+                        <!--                        <button v-model="type" label="交通银行"></button>-->
+                        <input v-model="type" name="mode" type="radio" value="交通银行"></input>
+                        <label for="contactChoice1">交通银行</label>
+                        <img alt src="../img/test/jiaotong.png">
+                        <!-- <span>交通银行</span> -->
+                    </div>
+                </div>
+
+                <!--                <div :style='{"padding":"10px 15px","boxShadow":"","margin":"0","borderColor":"rgba(255,0,0,.3)","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"0","borderWidth":"0","borderStyle":"solid"}'-->
+                <!--                     class="detail-item">-->
+                <!--                    <span :style='{"padding":"0 12px 0 0","minWidth":"94px","fontSize":"14px","color":"#333","textAlign":"right"}'>充电宝编号：</span>-->
+                <!--                    <span :style='{"padding":"5px 15px","boxShadow":"","borderColor":"rgba(0,0,0,.3)","backgroundColor":"rgba(255, 255, 255, 0)","color":"#333","borderRadius":"4px","textAlign":"left","borderWidth":"0","width":"auto","lineHeight":"34px","fontSize":"14px","borderStyle":"solid"}'-->
+                <!--                          class="desc">-->
+                <!--								1234576587-->
+                <!--							</span>-->
+                <!--                </div>-->
+                <div :style='{"padding":"10px 15px","boxShadow":"","margin":"0","borderColor":"rgba(255,0,0,.3)","backgroundColor":"rgba(255, 255, 255, 0)","borderRadius":"0","borderWidth":"0","borderStyle":"solid"}'
+                     class="detail-item"
+                     style="text-align: right;">
+
+                    <button v-if="isAuth('chongdianbaotoufang','租赁')"
+                            :style='{"padding":"0 10px","boxShadow":"0 0 6px #00babd","margin":"0 5px","borderColor":"rgba(0,0,0,.3)","backgroundColor":"#fff","color":"rgba(0, 186, 189, 1)","borderRadius":"4px","borderWidth":"0","width":"auto","lineHeight":"34px","fontSize":"14px","borderStyle":"solid"}'
+                            class="layui-btn"
+                            type="button" @click="submitTap()">
+                        确认支付
+                    </button>
+                    <button
+                            :style='{"padding":"0 10px","boxShadow":"0 0 6px #00babd","margin":"0 5px","borderColor":"rgba(0,0,0,.3)","backgroundColor":"#fff","color":"rgba(0, 186, 189, 1)","borderRadius":"4px","borderWidth":"0","width":"auto","lineHeight":"34px","fontSize":"14px","borderStyle":"solid"}'
+                            class="layui-btn"
+                            type="button" @click="onAcrossTap('chongdianbaotoufang')">
+                        返回
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row detail-tab">
+            <div :style='{"boxShadow":"","borderColor":"rgba(255,0,0,.3)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"10px","borderStyle":"solid","borderWidth":"0"}'
+                 class="layui-tab layui-tab-card"
+                 style="overflow: hidden;">
+
+                <ul :style='{"color":"rgba(0, 0, 0, 1)","backgroundColor":"rgba(247, 247, 247, 1)","fontSize":"14px"}'
+                    class="layui-tab-title">
+
+
+                </ul>
+
+                <div class="layui-tab-content">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../layui/layui.js"></script>
+<script src="../js/vue.js"></script>
+<!-- 组件配置信息 -->
+<script src="../js/config.js"></script>
+<!-- 扩展插件配置信息 -->
+<script src="../modules/config.js"></script>
+<!-- 工具方法 -->
+<script src="../js/utils.js"></script>
+<script src="../js/axios.js"></script>
+<script src="../js/axios.min.js"></script>
+
+<script>
+
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            url: '',
+            // 轮播图
+            data: ''
+        },
+        mounted: function () {
+            var obj = JSON.parse(localStorage.getItem('crossObj'));
+            this.data = obj
+            var payUrl = localStorage.getItem('payUrl');
+            this.url = payUrl
+        },
+        methods: {
+            jump(url) {
+                jump(url)
+            },
+            isAuth(tablename, button) {
+                return isFrontAuth(tablename, button)
+            },
+            // 跨表
+            onAcrossTap(acrossTable) {
+                jump(`./${acrossTable}/list.html?corss=true`);
+            },
+            submitTap() {
+                axios({
+                    url: this.url,
+                    method: "post",
+                    data: this.data
+                }).then(({data}) => {
+                    this.onAcrossTap('chongdianbaotoufang')
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>
